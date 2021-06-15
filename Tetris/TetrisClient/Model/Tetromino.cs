@@ -82,7 +82,10 @@ namespace TetrisClient.Model
             this.OffsetY = offsetY;
         }
 
-
+        /// <summary>
+        /// Geeft een random tetromino block terug
+        /// </summary>
+        /// <returns></returns>
         public static Tetromino GetRandomShape() {
             var shapeIndex = random.Next(shapes.Length);
             var colorIndex = random.Next(colors.Length);

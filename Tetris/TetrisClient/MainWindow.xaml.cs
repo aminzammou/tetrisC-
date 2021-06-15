@@ -43,6 +43,11 @@ namespace TetrisClient
 
             dropCurrentTetrominoDispatchtimer.Start();
         }
+        /// <summary>
+        /// Dropt de tetromino block zol lang de game nog niet afgelopen is
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnDropCurrentTetromino(object sender, EventArgs e) {
             tetrisEngine.DropCurrentTetromino();
             if (tetrisEngine.GameEnded)
@@ -54,40 +59,10 @@ namespace TetrisClient
             {
                 DrawGrid();
             }
-            /*
-            //TetrisGrid.Children.RemoveAt(TetrisGrid.Children.OfType<Shape>().Count() - 1);
-            TetrisGrid.Children.Clear();
-
-             CurrentTetromino = Tetromino.GetShapeL();
-
-            int[,] values = CurrentTetromino.Shape.Value;
-            for (int i = 0; i < values.GetLength(0); i++)
-            {
-                for (int j = 0; j < values.GetLength(1); j++)
-                {
-
-                    // Als de waarde niet gelijk is aan 1,
-                    // dan hoeft die niet getekent te worden:
-                    if (values[i, j] != 1) continue;
-
-                    Rectangle rectangle = new Rectangle()
-                    {
-                        Width = 25, // Breedte van een 'cell' in de Grid
-                        Height = 25, // Hoogte van een 'cell' in de Grid
-                        Stroke = Brushes.White, // De rand
-                        StrokeThickness = 1, // Dikte van de rand
-                        Fill = CurrentTetromino.Brush, // Achtergrondkleur
-                    };
-
-                    TetrisGrid.Children.Add(rectangle); // Voeg de rectangle toe aan de Grid
-                    Grid.SetRow(rectangle, i + offsetY); // Zet de rij
-                    Grid.SetColumn(rectangle, j + offsetX); // Zet de kolom
-                }
-            }
-            offsetY++;
-            */
         }
-
+        /// <summary>
+        /// creeert en verwijdert het gehele speelveld
+        /// </summary>
         private void DrawGrid()
         {
             // alles wissen
@@ -142,19 +117,46 @@ namespace TetrisClient
                     Grid.SetColumn(rectangle, x + tetrisEngine.CurrentTetromino.OffsetX); // Zet de kolom
                 }
             }
+            DrawNextTetromino();
 
             // draw score
             Score.Content = "Score: " + tetrisEngine.Score.Punten;
             Lines.Content = "Aantal regels: " + tetrisEngine.Score.Regels;
         }
 
-        private void RemoveUiObject()
-        {
-            //TetrisGrid.Children.RemoveAt(TetrisGrid.Children.OfType<Shape>().Count() - 1);
-            //TetrisGrid.Children.Cast<UIElement>().Where(e => e);
+        private void DrawNextTetromino() {
+            // alles wissen
+            NextTetronimo.Children.Clear();
+            int[,] values = tetrisEngine.NextTetromino.Shape.Value;
+            for (int y = 0; y < values.GetLength(0); y++)
+            {
+                for (int x = 0; x < values.GetLength(1); x++)
+                {
 
+                    // Als de waarde niet gelijk is aan 1,
+                    // dan hoeft die niet getekent te worden:
+                    if (values[y, x] != 1) continue;
+
+                    Rectangle rectangle = new Rectangle()
+                    {
+                        Width = 25, // Breedte van een 'cell' in de Grid
+                        Height = 25, // Hoogte van een 'cell' in de Grid
+                        Stroke = Brushes.White, // De rand
+                        StrokeThickness = 1, // Dikte van de rand
+                        Fill = tetrisEngine.NextTetromino.Brush, // Achtergrondkleur
+                    };
+
+                    NextTetronimo.Children.Add(rectangle); // Voeg de rectangle toe aan de Grid
+                    Grid.SetRow(rectangle, y + 0); // Zet de rij
+                    Grid.SetColumn(rectangle, x + 0); // Zet de kolom
+                }
+            }
         }
-
+        /// <summary>
+        /// Op bassis van de input van de gebruiker worden er keuzes op de tetromino toegepast
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Windows_KeyEvent(Object sender, KeyEventArgs e) {
             switch (e.Key) {
                 case Key.Left:
@@ -179,8 +181,23 @@ namespace TetrisClient
                     DrawGrid();
                     break;
                 default:
-                    MessageBox.Show("neee");
                     break;
+            }
+        }
+        public void Quit(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        public void PauzeGame(object sender, RoutedEventArgs e)
+        {
+            if (dropCurrentTetrominoDispatchtimer.IsEnabled)
+            {
+                dropCurrentTetrominoDispatchtimer.Stop();
+            }
+            else
+            {
+                dropCurrentTetrominoDispatchtimer.Start();
             }
         }
     }

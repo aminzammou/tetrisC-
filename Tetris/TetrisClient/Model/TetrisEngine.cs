@@ -30,8 +30,12 @@ namespace TetrisClient.Model
             this.Score = new Score();
             this.TetrisGrid = new TetrisGrid(TotaalY, TotaalX);
             this.CurrentTetromino = Tetromino.GetRandomShape();
+            this.NextTetromino = Tetromino.GetRandomShape();
         }
 
+        /// <summary>
+        /// zorgt er voor dat het tetromino object valt
+        /// </summary>
         public void DropCurrentTetromino()
         {
             var collisionDetected = DetectCollision(CurrentTetromino.Shape, CurrentTetromino.OffsetY + 1, CurrentTetromino.OffsetX);
@@ -70,16 +74,17 @@ namespace TetrisClient.Model
 
                 // klaar, bereid nu een nieuwe tetromino!
                 // maar, als die collide, dan game over!
-                var newTetromino = Tetromino.GetRandomShape();
-                if (DetectCollision(newTetromino.Shape, newTetromino.OffsetY, newTetromino.OffsetX))
+                
+                if (DetectCollision(NextTetromino.Shape, NextTetromino.OffsetY, NextTetromino.OffsetX))
                 {
                     // game over
                     GameEnded = true;
                 }
                 else
                 {
-                    this.CurrentTetromino = newTetromino;
+                    this.CurrentTetromino = NextTetromino;
                 }
+                NextTetromino = Tetromino.GetRandomShape();
             }
             else
             {
@@ -127,7 +132,9 @@ namespace TetrisClient.Model
             }
             return false;
         }
-
+        /// <summary>
+        ///  zorgt er voor dat het tetromino object naar links wordt verplaatst door middel van de offset
+        /// </summary>
         public void GoToTheleft()
         {
             if (DetectCollision(CurrentTetromino.Shape, CurrentTetromino.OffsetY, CurrentTetromino.OffsetX - 1) == false) {
@@ -135,6 +142,9 @@ namespace TetrisClient.Model
             }
             
         }
+        /// <summary>
+        /// zorgt er voor dat het tetromino object naar rechts wordt verplaatst door middel van de offset
+        /// </summary>
         public void GoToTheRight()
         {
             if (DetectCollision(CurrentTetromino.Shape, CurrentTetromino.OffsetY, CurrentTetromino.OffsetX + 1) == false)
@@ -143,7 +153,9 @@ namespace TetrisClient.Model
             }
                 
         }
-
+        /// <summary>
+        /// zorgt er voor dat het tetromino object geroteerd wordt naar links door middel van het matrix object
+        /// </summary>
         public void RotateToTheLeft()
         {
             var newShape = CurrentTetromino.Shape.Rotate90CounterClockwise();
@@ -153,7 +165,9 @@ namespace TetrisClient.Model
                 CurrentTetromino.Shape = newShape;
             }
         }
-
+        /// <summary>
+        /// zorgt er voor dat het tetromino object geroteerd wordt naar rechts door middel van het matrix object
+        /// </summary>
         public void RotateToTheRight()
         {
             var newShape = CurrentTetromino.Shape.Rotate90();

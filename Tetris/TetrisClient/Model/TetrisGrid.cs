@@ -14,7 +14,7 @@ namespace TetrisClient.Model
         {
         }
 
-        // indexer
+        // Een indexer
         public Cell this[int rowIndex, int colIndex]
         {
             get
@@ -34,16 +34,13 @@ namespace TetrisClient.Model
                 yield return GetRow(rowIndex);
             }
         }
-
+        /// <summary>
+        /// Geeft een row aan cellen terug
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <returns></returns>
         public IEnumerable<Cell> GetRow(int rowIndex)
         {
-            // normale versie
-            //var row = new List<Cell>();
-            //for (int colIndex = 0; colIndex < ColCount; colIndex++)
-            //{
-            //    row.Add(this[rowIndex, colIndex]);
-            //}
-            //return row;
 
             // yield-return versie
             for (int colIndex = 0; colIndex < ColCount; colIndex++)
@@ -51,7 +48,10 @@ namespace TetrisClient.Model
                 yield return this[rowIndex, colIndex];
             }
         }
-
+        /// <summary>
+        /// Zorgt er voor dat na dat er een rij verwijdert is dat deze worden verplaatst en een nieuwe lege boven aan wordt aangemaakt
+        /// </summary>
+        /// <param name="rowIndex"></param>
         public void ShiftRow(int rowIndex)
         {
             // shift
@@ -68,7 +68,11 @@ namespace TetrisClient.Model
                 cells[0, x].Bezet = false;
             }
         }
-
+        /// <summary>
+        /// creert een nieuwe grid
+        /// </summary>
+        /// <param name="rows"></param>
+        /// <param name="cols"></param>
         public TetrisGrid(int rows, int cols)
         {
             cells = new Cell[rows, cols];
