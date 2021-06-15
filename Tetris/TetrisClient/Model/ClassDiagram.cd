@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TetrisClient.Model.TetrisEngine">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAIAAAAAIAAgAAAAAAAAAAAALEgABABBAAAACAAA=</HashCode>
+      <FileName>Model\TetrisEngine.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Score" />
+      <Property Name="TetrisGrid" />
+      <Property Name="CurrentTetromino" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TetrisClient.Model.Tetromino">
+    <Position X="10" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAABAAAAAIAAAAAAEAAAAAAAADAAAQABAAABAA=</HashCode>
+      <FileName>Model\Tetromino.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Shape" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TetrisClient.Model.Cell">
+    <Position X="13.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Cell.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TetrisClient.Model.Score">
+    <Position X="0.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Score.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TetrisClient.Model.TetrisGrid">
+    <Position X="13.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\TetrisGrid.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="cells" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Struct Name="TetrisClient.Model.Matrix">
+    <Position X="13.25" Y="4.75" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="TetrisClient.Model.Matrix.RotationMethod" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Model\Matrix.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAACIAAAAAAAAAAAAAAAAEAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Model\Matrix.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

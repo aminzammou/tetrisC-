@@ -8,33 +8,27 @@ using System.Windows.Threading;
 using System;
 using System.Collections.Generic;
 
-namespace TetrisClient
+namespace TetrisClient.Model
 {
     class TetrisEngine
     {
         public const int TotaalX = 10;
         public const int TotaalY = 16;
-        public int Punten { get; set; }
-        public int Regels { get; set; }
 
-        public Bezetting[,] Bezettingen { get; set; }
-        public Tetromino CurrentTetromino { get; set; }
+        public Score Score { get; }
 
-        //public Tetromino Nextetromino { get; set; }
+        public TetrisGrid TetrisGrid { get; }
+
+        public Tetromino CurrentTetromino { get; private set; }
+
+        public Tetromino NextTetromino { get; private set; }
 
         public bool GameEnded = false;
 
         public TetrisEngine()
         {
-            this.Bezettingen = new Bezetting[TotaalY, TotaalX];
-            for (int i = 0; i < this.Bezettingen.GetLength(0); i++)
-            {
-                for (int j = 0; j < this.Bezettingen.GetLength(1); j++)
-                {
-                    this.Bezettingen[i, j] = new Bezetting();
-                }
-            }
-
+            this.Score = new Score();
+            this.TetrisGrid = new TetrisGrid(TotaalY, TotaalX);
             this.CurrentTetromino = Tetromino.GetRandomShape();
         }
 
@@ -54,59 +48,25 @@ namespace TetrisClient
                         // dan hoeft die niet getekent te worden:
                         if (values[y, x] != 1) continue;
 
-                        var bezezetting = Bezettingen[y + CurrentTetromino.OffsetY, x + CurrentTetromino.OffsetX];
-                        bezezetting.Bezet = true;
-                        bezezetting.Brush = CurrentTetromino.Brush;
+                        var cell = TetrisGrid[y + CurrentTetromino.OffsetY, x + CurrentTetromino.OffsetX];
+                        cell.Bezet = true;
+                        cell.Brush = CurrentTetromino.Brush;
 
                     }
                 }
 
                 //verwijder eventueel hele rijen
-                //var query = from bezetting[] row in values
-                //            where row.all(a => a.bezet)
-                //            select row;
-                //foreach (var row in query)
-                //{
-                //    if (row.count() != 0) {
-                //        // shift
-                //        for (int y = row.; y > 0; y--)
-                //        {
-                //            for (int x = 0; x < bezettingen.getlength(1); x++)
-                //            {
-                //                bezettingen[y, x] = bezettingen[y - 1, x];
-                //            }
-                //        }
-                //        // bovenste rij, leeg maken
-                //        for (int x = 0; x < bezettingen.getlength(1); x++)
-                //        {
-                //            bezettingen[0, x].bezet = false;
-                //        }
-                //    }
-                //}
-                //var bezettingenArray = Bezettingen.OfType<Bezetting[]>().ToArray();
-                for (int rowIndex = 0; rowIndex < Bezettingen.GetLength(0); rowIndex++)
+                int aantalRijenBezet = 0;
+                for (int rowIndex = 0; rowIndex < TetrisGrid.RowCount; rowIndex++)
                 {
-                    var rijBezet = Enumerable.Range(0, Bezettingen.GetLength(1)).Select(x => Bezettingen[rowIndex, x]).All(a => a.Bezet);
-                    //var rijBezet = bezettingenArray[rowIndex].All(a => a.Bezet);
+                    var rijBezet = TetrisGrid.GetRow(rowIndex).All(a => a.Bezet);
                     if(rijBezet)
                     {
-                        Punten = Punten + 25;
-                        Regels++;
-                        // shift
-                        for (int y = rowIndex; y > 0; y--)
-                        {
-                            for (int x = 0; x < Bezettingen.GetLength(1); x++)
-                            {
-                                Bezettingen[y, x] = Bezettingen[y - 1, x];
-                            }
-                        }
-                        // bovenste rij, leeg maken
-                        for (int x = 0; x < Bezettingen.GetLength(1); x++)
-                        {
-                            Bezettingen[0, x].Bezet = false;
-                        }
+                        aantalRijenBezet++;
+                        TetrisGrid.ShiftRow(rowIndex);
                     }
                 }
+                Score.RowsRemoved(aantalRijenBezet);
 
                 // klaar, bereid nu een nieuwe tetromino!
                 // maar, als die collide, dan game over!
@@ -139,7 +99,6 @@ namespace TetrisClient
         private bool DetectCollision(Matrix shape, int offsetY, int offsetX)
         {
             // geland
-            //int[,] shape = CurrentTetromino.Shape.Value;
             for (int shapeY = 0; shapeY < shape.Value.GetLength(0); shapeY++)
             {
                 for (int shapeX = 0; shapeX < shape.Value.GetLength(1); shapeX++)
@@ -153,14 +112,14 @@ namespace TetrisClient
                     var x = shapeX + offsetX;
 
                     // als y buiten range, dan collision
-                    if (y < 0 || y >= Bezettingen.GetLength(0))
+                    if (y < 0 || y >= TetrisGrid.RowCount)
                         return true;
 
                     // als x buiten range, dan collision
-                    if (x < 0 || x >= Bezettingen.GetLength(1))
+                    if (x < 0 || x >= TetrisGrid.ColCount)
                         return true;
 
-                    var bezezetting = Bezettingen[y, x];
+                    var bezezetting = TetrisGrid[y, x];
                     if (bezezetting.Bezet)
                         return true;
 

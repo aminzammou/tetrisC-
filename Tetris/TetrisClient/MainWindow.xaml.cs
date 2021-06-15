@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using TetrisClient.Model;
 
 namespace TetrisClient
 {
@@ -43,8 +44,6 @@ namespace TetrisClient
             dropCurrentTetrominoDispatchtimer.Start();
         }
         private void OnDropCurrentTetromino(object sender, EventArgs e) {
-            Score.Content = "Score: " + tetrisEngine.Punten;
-            Lines.Content =  "Aantal regels: " + tetrisEngine.Regels;
             tetrisEngine.DropCurrentTetromino();
             if (tetrisEngine.GameEnded)
             {
@@ -95,12 +94,12 @@ namespace TetrisClient
             TetrisGrid.Children.Clear();
 
             // bezettingen tekenen
-            for (int y = 0; y < tetrisEngine.Bezettingen.GetLength(0); y++)
+            for (int y = 0; y < tetrisEngine.TetrisGrid.RowCount; y++)
             {
-                for (int x = 0; x < tetrisEngine.Bezettingen.GetLength(1); x++)
+                for (int x = 0; x < tetrisEngine.TetrisGrid.ColCount; x++)
                 {
-                    var bezetting = tetrisEngine.Bezettingen[y, x];
-                    if(bezetting.Bezet)
+                    var cell = tetrisEngine.TetrisGrid[y, x];
+                    if(cell.Bezet)
                     {
                         Rectangle rectangle = new Rectangle()
                         {
@@ -108,7 +107,7 @@ namespace TetrisClient
                             Height = 25, // Hoogte van een 'cell' in de Grid
                             Stroke = Brushes.White, // De rand
                             StrokeThickness = 1, // Dikte van de rand
-                            Fill = bezetting.Brush, // Achtergrondkleur
+                            Fill = cell.Brush, // Achtergrondkleur
                         };
 
                         TetrisGrid.Children.Add(rectangle); // Voeg de rectangle toe aan de Grid
@@ -143,6 +142,10 @@ namespace TetrisClient
                     Grid.SetColumn(rectangle, x + tetrisEngine.CurrentTetromino.OffsetX); // Zet de kolom
                 }
             }
+
+            // draw score
+            Score.Content = "Score: " + tetrisEngine.Score.Punten;
+            Lines.Content = "Aantal regels: " + tetrisEngine.Score.Regels;
         }
 
         private void RemoveUiObject()
