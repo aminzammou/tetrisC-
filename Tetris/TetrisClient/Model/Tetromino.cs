@@ -20,7 +20,7 @@ namespace TetrisClient.Model
 
         public int Width => Shape.Value.GetLength(0);
 
-        private static Random random = new Random();
+        //private static Random random = new Random();
 
         private static Brush[] colors = new Brush[] { Brushes.Red, Brushes.Blue, Brushes.Yellow, Brushes.Green, Brushes.Purple, Brushes.Brown };
 
@@ -86,7 +86,7 @@ namespace TetrisClient.Model
         /// Geeft een random tetromino block terug
         /// </summary>
         /// <returns></returns>
-        public static Tetromino GetRandomShape() {
+        public static Tetromino GetRandomShape(Random random) {
             var shapeIndex = random.Next(shapes.Length);
             var colorIndex = random.Next(colors.Length);
             return new Tetromino(shapes[shapeIndex], colors[colorIndex], 0, 0);

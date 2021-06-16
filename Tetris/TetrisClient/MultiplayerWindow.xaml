@@ -5,8 +5,132 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:TetrisClient"
         mc:Ignorable="d"
-        Title="MultiplayerWindow" Height="450" Width="800">
-    <Grid>
-        <Button Content="Invoke ReadyUp message" Click="StartGame_OnClick"></Button>
-    </Grid>
+        Title="MultiplayerWindow" Height="450" Width="900" KeyDown="Windows_KeyEvent">
+    <DockPanel>
+    <DockPanel Margin="10,10,0,0">
+
+        <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Grid x:Name="TetrisGrid" DockPanel.Dock="Left" ShowGridLines="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="25"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </Border>
+
+        <StackPanel x:Name="GameInfo" DockPanel.Dock="Right" Margin="20,0,0,0">
+            <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Grid x:Name="NextTetronimo" Width="150" Height="100">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </Border>
+            <Label x:Name="Lines" FontSize="25"></Label>
+            <Label x:Name="Score" FontSize="25"></Label>
+            <DockPanel  HorizontalAlignment="Center" Margin="0,0,0,0">
+                <Button Width="62" Margin="10" Click="StartGame_OnClick">Start game</Button>
+            </DockPanel>
+            </StackPanel>
+        
+
+
+    </DockPanel>
+        <DockPanel Margin="15,15,0,0">
+
+            <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Grid x:Name="TetrisGrid2" DockPanel.Dock="Left" ShowGridLines="True">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </Border>
+
+            
+
+            <StackPanel x:Name="GameInfo2" DockPanel.Dock="Right" Margin="20,0,0,0">
+                <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Grid x:Name="NextTetronimo2" Width="150" Height="100">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="25"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25"/>
+                            <ColumnDefinition Width="25"/>
+                            <ColumnDefinition Width="25"/>
+                            <ColumnDefinition Width="25"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </Border>
+                <Label x:Name="Lines2" FontSize="25"></Label>
+                <Label x:Name="Score2" FontSize="25"></Label>
+            </StackPanel>
+
+
+        </DockPanel>
+    </DockPanel>
+
 </Window>

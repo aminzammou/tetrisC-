@@ -25,12 +25,15 @@ namespace TetrisClient.Model
 
         public bool GameEnded = false;
 
-        public TetrisEngine()
+        private Random random;
+
+        public TetrisEngine(Random random)
         {
             this.Score = new Score();
+            this.random = random;
             this.TetrisGrid = new TetrisGrid(TotaalY, TotaalX);
-            this.CurrentTetromino = Tetromino.GetRandomShape();
-            this.NextTetromino = Tetromino.GetRandomShape();
+            this.CurrentTetromino = Tetromino.GetRandomShape(random);
+            this.NextTetromino = Tetromino.GetRandomShape(random);
         }
 
         /// <summary>
@@ -84,7 +87,7 @@ namespace TetrisClient.Model
                 {
                     this.CurrentTetromino = NextTetromino;
                 }
-                NextTetromino = Tetromino.GetRandomShape();
+                NextTetromino = Tetromino.GetRandomShape(random);
             }
             else
             {
